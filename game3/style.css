@@ -1,11 +1,11 @@
-/* Style for the body */
+
 body {
-    background-image: url('snake.jpg'); /* Ensure snake.jpg exists in the correct folder */
-    background-size: cover; /* Adjust background to cover the entire screen */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Prevent image repetition */
-    margin: 0; /* Remove any default margin */
-    padding: 0; /* Remove any default padding */
-    height: 100vh; /* Set height to full viewport height */
-    width: 100%; /* Set width to full viewport width */
+    background-image: url('snake.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    margin: 0; 
+    padding: 0; 
+    height: 100vh; 
+    width: 100%; 
 }
