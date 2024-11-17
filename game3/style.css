@@ -1,5 +1,6 @@
-
-body {
+body { 
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
     background-image: url('snake.jpg'); 
     background-size: cover; 
     background-position: center; 
@@ -9,3 +10,4 @@ body {
     height: 100vh; 
     width: 100%; 
 }
+
