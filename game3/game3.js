@@ -1,17 +1,17 @@
 //board
-var blockSize = 25;
-var rows = 20;
-var cols = 20;
-var board;
-var context;
+let blockSize = 25;
+let rows = 25;
+let cols = 25;
+let board;
+let context;
 
 //snake head
-//var snakeX = blockSize = 5;
-//var snakeY = blockSize = 5;
+const snakeX = blockSize = 30;
+const snakeY = blockSize = 30;
 
 
 window.onload = function() {
-    board = document.getElementById("board");
+    board = document.querySelector("#board");
     board.height = rows * blockSize;
     board.width = cols * blockSize;
     context = board.getContext("2d");
