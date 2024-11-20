@@ -1,4 +1,4 @@
-/* Global Reset and Box Model */
+
 * {
     margin: 0;
     padding: 0;
@@ -7,8 +7,8 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f8f8f8; /* Light gray background for simplicity */
-    color: #333; /* Dark gray text for better readability */
+    background-color: #f8f8f8; 
+    color: #333; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,7 +17,7 @@ body {
     padding: 20px;
 }
 
-/* Header */
+
 h1 {
     font-size: 3rem;
     color: #333;
@@ -25,7 +25,7 @@ h1 {
     margin-bottom: 40px;
 }
 
-/* Game List Grid */
+
 .game-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -34,9 +34,9 @@ h1 {
     max-width: 1200px;
 }
 
-/* Game Card Styles */
+
 .game-card {
-    background-color: #fff; /* White background for cards */
+    background-color: #fff; 
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -72,11 +72,10 @@ h2 {
 
 p {
     font-size: 1rem;
-    color: #666; /* Slightly lighter text color for description */
+    color: #666; 
     line-height: 1.5;
 }
 
-/* Footer */
 footer {
     text-align: center;
     margin-top: 60px;
@@ -96,7 +95,7 @@ footer a:hover {
     text-decoration: underline;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     h1 {
         font-size: 2.5rem;
