@@ -5,21 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Menu</title>
     <link rel="stylesheet" href="css/style.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Games Menu</h1>
-        <ul>
-            <li>
-                <a href="chess/chess.html" class="image-button">
-                    <img src="img/chess copy.png" alt="schaken" class="chess-icon">
-                    <span>Chess</span>
-                </a>
-            </li>
-            <li><a href="game2/game2.html">Game 2</a></li>
-            <li><a href="game3/game3.html">Game 3</a></li>
-        </ul>
-        <footer>&copy; 2024 Your Game Project</footer>
+        <header>
+            <h1>Explore Our Games</h1>
+        </header>
+        
+        <main>
+            <div class="game-list">
+                <div class="game-card">
+                    <a href="chess/chess.html" class="game-link image-button">
+                        <img src="img/chess copy.png" alt="Chess game icon" class="chess-icon">
+                        <h2>Chess</h2>
+                        <p>Challenge your mind with this classic strategy game.</p>
+                    </a>
+                </div>
+                <div class="game-card">
+                    <a href="tictactoe/game2.html" class="game-link">
+                        <img src="img/tactactoe.png" alt="Chess game icon" class="tictactoe">
+                        <h2>Game 2</h2>
+                        <p>Join the fun in this exciting new game.</p>
+                    </a>
+                </div>
+                <div class="game-card">
+                    <a href="snake/game3.html" class="game-link">
+                        <img src="img/snake.webp" alt="Chess game icon" class="snake">
+                        <h2>Snake</h2>
+                        <p>Test your skills in this Snake game.</p>
+                    </a>
+                </div>
+                <div class="game-card">
+                    <a href="dammen/dammen.html" class="game-link">
+                        <img src="img/dammen.png" alt="Chess game icon" class="snake">
+                        <h2>Snake</h2>
+                        <p>Challenge your mind with this classic strategy game</p>
+                    </a></div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>&copy; 2024 Your Game Project | All Rights Reserved</p>
+        </footer>
     </div>
 </body>
 </html>
