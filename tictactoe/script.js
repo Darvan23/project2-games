@@ -1,10 +1,9 @@
 const cells = document.querySelectorAll("[data-cell]");
-const winnerMessage = document.getElementById("winner-message");
-const restartButton = document.getElementById("restart-button");
-const playerOIndicator = document.getElementById("player-o");
-const playerXIndicator = document.getElementById("player-x");
- 
-let currentPlayer = "O"; // Start with Player O
+const winnerMessage = document.querySelector("#winner-message");
+const restartButton = document.querySelector("#restart-button");
+const playerOIndicator = document.querySelector("#player-o");
+const playerXIndicator = document.querySelector("#player-x");
+let currentPlayer = "O"; 
 let gameActive = true;
  
 const winningCombinations = [
@@ -70,7 +69,7 @@ function checkWin() {
 function isDraw() {
   return [...cells].every(cell => cell.classList.contains("taken"));
 }
- 
+ //
 function restartGame() {
   currentPlayer = "O";
   gameActive = true;
