@@ -116,3 +116,17 @@ body {
   #restart-button:active {
     background-color: #cfcfcf; 
   }
+  
+  #scorePlayerX{ 
+    text-align: center;
+    font-style: normal;
+    font-size:larger;
+   position: fixed;
+  }
+
+  #scorePlayerO{ 
+  text-align: center;
+    font-style: normal;
+    
+ 
+  }
