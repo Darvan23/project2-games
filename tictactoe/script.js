@@ -3,6 +3,7 @@ const winnerMessage = document.querySelector("#winner-message");
 const restartButton = document.querySelector("#restart-button");
 const playerOIndicator = document.querySelector("#player-o");
 const playerXIndicator = document.querySelector("#player-x");
+const messageforO = 
 let currentPlayer = "O"; 
 let gameActive = true;
  
