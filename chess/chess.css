@@ -1,48 +1,67 @@
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
     margin: 0;
-    font-family: Arial, sans-serif;
-    flex-direction: column;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-.chessboard {
-    display: grid;
-    grid-template-columns: repeat(8, 80px);
-    grid-template-rows: repeat(8, 80px);
-    gap: 0;
-    border: 2px solid black;
+body{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f2f2f2;
+}
+
+.container{
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+h1{
+    text-align: center;
+    font-weight: 500;
+}
+
+.board{
+    width: 400px;
+    margin: 20px auto;
+}
+
+.buttons{
     margin-top: 20px;
-}
-
-.chessboard .square {
-    width: 80px;
-    height: 80px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    gap: 10px;
+}
+
+button{
+    color: #fff;
+    background-color: #000;
+    border: none;
+    width: 120px;
+    height: 40px;
+    border-radius: 6px;
+    font-size: 0.9rem;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.chessboard .light {
-    background-color:rgb(218, 179, 129);
+button:hover{
+    background-color: #434343;
 }
 
-.chessboard .dark {
-    background-color: rgb(128, 39, 39);
-}
-
-.piece {
-    width: 100%;
-    height: 100%;
-}
-
-.selected {
-    border: 2px solid yellow;
-}
-
-h1 {
-    margin-bottom: 20px;
+.move-history{
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    height: 100px;
+    width: 400px;
+    overflow-y: scroll;
+    background-color: #f2f2f2;
 }

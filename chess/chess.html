@@ -1,16 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chess Game</title>
     <link rel="stylesheet" href="chess.css">
+    <link rel="stylesheet" href="css/chessboard-1.0.0.min.css">
+    <title>ꉓꃅꍟꌗꌗ ꁅꍏꎭꍟ</title>
 </head>
-<body>
-    <h1 style="text-align: center;">Chess Game</h1>
-    <div id="chessboard" class="chessboard"></div>
-    <p id="turnMessage" style="text-align: center;"></p>
 
+<body>
+
+    <div class="container">
+        <h1>ꉓꃅꍟꌗꌗ ꁅꍏꎭꍟ</h1>
+        <div class="board" id="board"></div>
+        <div class="buttons">
+            <button class="play-again">Play Again</button>
+            <button class="set-pos">Set Position</button>
+            <button class="flip-board">Flip Board</button>
+        </div>
+        <div id="move-history" class="move-history"></div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="js/chessboard-1.0.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
     <script src="chess.js"></script>
 </body>
+
 </html>
