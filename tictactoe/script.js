@@ -4,7 +4,7 @@ const restartButton = document.getElementById("restart-button");
 const playerOIndicator = document.getElementById("player-o");
 const playerXIndicator = document.getElementById("player-x");
  
-let currentPlayer = "O"; // Start with Player O
+let currentPlayer = "O"; 
 let gameActive = true;
  
 const winningCombinations = [
