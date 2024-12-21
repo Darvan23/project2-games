@@ -1,30 +1,81 @@
-//board
-var blockSize = 25;
-var rows = 20;
-var cols = 20;
-var board;
-var context;
+const gameBoard = document.getElementById("game-board");
+const boardSize = 20;
 
-//snake head
-//var snakeX = blockSize = 5;
-//var snakeY = blockSize = 5;
+let snakeX = 10;
+let snakeY = 10;
+let foodX = 5;
+let foodY = 5;
+let dirX = 0;
+let dirY = 1;
 
+// Maak het grid
+for (let i = 0; i < boardSize * boardSize; i++) {
+    const cell = document.createElement("div");
+    cell.classList.add("cell");
+    gameBoard.appendChild(cell);
+}
 
-window.onload = function() {
-    board = document.getElementById("board");
-    board.height = rows * blockSize;
-    board.width = cols * blockSize;
-    context = board.getContext("2d");
+function draw() {
+    // Maak het grid leeg
+    const cells = document.querySelectorAll(".cell");
+    for (let i = 0; i < cells.length; i++) {
+        const cell = cells[i];
+        cell.classList.remove("snake", "food")
+    }
 
-    update();
+    // Teken de snake
+    const snakeIndex = snakeY * boardSize + snakeX;
+    if (cells[snakeIndex]) {
+        cells[snakeIndex].classList.add("snake");
+    }
 
+    // Teken het eten
+    const foodIndex = foodY * boardSize + foodX;
+    if (cells[foodIndex]) {
+        cells[foodIndex].classList.add("food");
+    }
 }
 
 function update() {
-    context.fillStyle = "black";
-    context.fillRect(0, 0, board.width, board.height);
+    // Beweeg de slang
+    snakeX += dirX;
+    snakeY += dirY;
 
-    context.fillStyle="lime";
-    context.fillRect(snakeX, snakeY , blockSize , blockSize);
-
+    // Check of slang het eten raakt
+    if (snakeX === foodX && snakeY === foodY) {
+        placeFood(); // Plaats nieuw eten
+    }
 }
+
+function placeFood() {
+    foodX = Math.floor(Math.random() * boardSize);
+    foodY = Math.floor(Math.random() * boardSize);
+}
+
+// Event listener voor beweging
+window.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowUp") { 
+        dirX = 0; 
+        dirY = -1;
+    } else if (e.key === "ArrowDown") {
+        dirX = 0; 
+        dirY = 1;
+    } else if (e.key === "ArrowLeft") { 
+        dirX = -1; 
+        dirY = 0;
+    } else if (e.key === "ArrowRight") { 
+        dirX = 1; 
+        dirY = 0; 
+    }
+});
+
+function gameLoop() {
+    update();
+    draw();
+    // roep de loop elke 200milliseconden
+    setTimeout(gameLoop, 200);
+}
+
+// Start het spel
+draw();
+gameLoop();

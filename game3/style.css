@@ -9,5 +9,23 @@ body {
     padding: 0; 
     height: 100vh; 
     width: 100%; 
-}
-
+  }
+  #game-board {
+    position: sticky;
+    margin-left: 750px;
+    display: grid;
+    grid-template-columns: repeat(20, 20px);
+    grid-template-rows: repeat(20, 20px);
+    gap: 1px;
+  }
+  .cell {
+    width: 20px;
+    height: 20px;
+    background-color: #000000;
+  }
+  .snake {
+    background-color: green;
+  }
+  .food {
+    background-color: red;
+  }
