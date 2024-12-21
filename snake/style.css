@@ -9,6 +9,7 @@ body {
     padding: 0; 
     height: 100vh; 
     width: 100%; 
+<<<<<<< HEAD:game3/style.css
   }
   #game-board {
     position: sticky;
@@ -29,3 +30,8 @@ body {
   .food {
     background-color: red;
   }
+=======
+    
+}
+
+>>>>>>> c065bf206fbd833aea2bdf36347eb819e85473d5:snake/style.css
