@@ -1,44 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Chess - Thomas Fisher (100198032)</title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" href="css/chess.css">
+  <meta charset="UTF-8" />
+  <title>Chess Game</title>
+  <link rel="stylesheet" href="css/chess.css" />
 </head>
-<body onload="setup();">
+<body>
+  <h1 style="text-align: center;">Chess Game</h1>
+  <div id="chessboard" class="chessboard"></div>
+  <p id="turnMessage" style="text-align: center;"></p>
 
-<h1>project 2</h1>
-<p id="turnInfo">Player's turn: <b>White</b></p>
-<section id="board">
-    <div class="overlay" id="promotionMessage">
-        <div class="overlay-inner">
-            <span class="overlay-title">Promotion!</span>
-            <p class="overlay-text" id="alertText"></p>
-            <ul id="promotionList" class="white">
-                <li><a href="#" class="promotion-button queen" onclick="promote('queen');"></a></li>
-                <li><a href="#" class="promotion-button castle" onclick="promote('castle');"></a></li>
-                <li><a href="#" class="promotion-button bishop" onclick="promote('bishop');"></a></li>
-                <li><a href="#" class="promotion-button knight" onclick="promote('knight');"></a></li>
-            </ul>
-        </div>
-    </div>
-	<div class="overlay" id="errorMessage">
-		<div class="overlay-inner">
-			<span class="overlay-title">game over!</span>
-			<p class="overlay-text" id="errorText"></p>
-			<a href="#" class="overlay-button" onclick="closeError();">Close</a>
-		</div>
-	</div>
-	<div class="overlay" id="endMessage">
-		<div class="overlay-inner">
-			<span class="overlay-title">Game Over!</span>
-			<p class="overlay-text" id="endText"></p>
-			<a href="#" class="overlay-button" onclick="newGame();">New Game</a>
-		</div>
-	</div>
-</section>
-
-<script src="js/chess.js"></script>
-
+  <script src="js/chess.js"></script>
 </body>
 </html>
