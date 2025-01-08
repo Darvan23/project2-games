@@ -1,14 +1,55 @@
-*
 
+body{
+    font-family: sans-serif
+}
+
+#board {
+    display: flex;
+    flex-direction: column;
+}
+
+.cellContainer {
+    display: flex;
+}
+
+.cell{
+    width: 30px;
+    height: 30px;
+    border: 1px solid black;
+    display: inline-block;
+    position: relative;
+}
+
+.cell {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    position: relative;
+}
+.dark-piece, .light-piece {
+    width: 40px;
+    height: 40px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.light-piece {
+    background-color: white;
+}
+
+/* 
 .board {
     display: grid;
-    grid-template-columns: repeat(10, 50px); /* 10 columns, each 50px wide */
-    grid-template-rows: repeat(10, 50px); /* 10 rows, each 50px high */
-    gap: 1px; /* Gap between cells */
+    grid-template-columns: repeat(10, 50px); 
+    grid-template-rows: repeat(10, 50px); 
+    gap: 1px;
 }
 .cell {
     width: 50px;
     height: 50px;
-    background-color: lightgray; /* Background color for cells */
+    background-color: lightgray; 
     border: 1px solid #000; 
-}
+} */
