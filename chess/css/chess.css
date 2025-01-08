@@ -46,4 +46,19 @@ body {
   h1 {
     margin-bottom: 20px;
   }
+  #resetBtn {
+    padding: 12px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+    transition: background-color 0.3s ease;
+  }
+  
+  #resetBtn:hover {
+    background-color: #45a049;
+  }
   
