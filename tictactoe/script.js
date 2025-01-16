@@ -1,8 +1,8 @@
 const cells = document.querySelectorAll("[data-cell]");
-const winnerMessage = document.getElementById("winner-message");
-const restartButton = document.getElementById("restart-button");
-const playerOIndicator = document.getElementById("player-o");
-const playerXIndicator = document.getElementById("player-x");
+const winnerMessage = document.querySelector("#winner-message");
+const restartButton = document.querySelector("#restart-button");
+const playerOIndicator = document.querySelector("#player-o");
+const playerXIndicator = document.querySelector("#player-x");
  
 let currentPlayer = "O"; 
 let gameActive = true;
