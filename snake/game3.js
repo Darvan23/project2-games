@@ -1,3 +1,4 @@
+// data 
 const gameBoard = document.getElementById("game-board");
 const scoreDisplay = document.getElementById("score");
 const boardSize = 20;
@@ -9,7 +10,7 @@ let dirX = 0;
 let dirY = 1;
 let score = 0;
 
-// Initialize the grid
+// Initialize the grid and new cell with appendchild 
 for (let i = 0; i < boardSize * boardSize; i++) {
     const cell = document.createElement("div");
     cell.classList.add("cell");
@@ -24,6 +25,7 @@ function draw() {
     // Draw the snake
     snake.forEach(segment => {
         const index = segment.y * boardSize + segment.x;
+        // Calculates the cell index for the food based on its x and y
         if (cells[index]) cells[index].classList.add("snake");
     });
 
@@ -32,11 +34,11 @@ function draw() {
     if (cells[foodIndex]) cells[foodIndex].classList.add("food");
 }
 
+// snake growth when eats 
 function update() {
-    // Move the snake
     const head = { x: snake[0].x + dirX, y: snake[0].y + dirY };
 
-    // Check for collisions
+    // Check for snake to not enter wall, die
     if (
         head.x < 0 || head.x >= boardSize || 
         head.y < 0 || head.y >= boardSize || 
@@ -52,7 +54,7 @@ function update() {
 
     // Check if the snake eats food
     if (head.x === foodX && head.y === foodY) {
-        score++;
+        score ++;
         updateScore();
         placeFood();
     } else {
@@ -60,18 +62,18 @@ function update() {
         snake.pop();
     }
 }
-
+// random food placement 
 function placeFood() {
     let validPosition = false;
     while (!validPosition) {
         foodX = Math.floor(Math.random() * boardSize);
         foodY = Math.floor(Math.random() * boardSize);
 
-        // Ensure food doesn't spawn inside the snake
+        // Ensure food doesn't spawn inside the snake .
         validPosition = !snake.some(segment => segment.x === foodX && segment.y === foodY);
     }
 }
-
+// reset game 
 function resetGame() {
     snake = [{ x: 10, y: 10 }];
     dirX = 0;
@@ -84,7 +86,7 @@ function resetGame() {
 function updateScore() {
     scoreDisplay.textContent = `Score: ${score}`;
 }
-
+//movement arrows
 window.addEventListener("keydown", (e) => {
     if (e.key === "ArrowUp" && dirY !== 1) {
         dirX = 0; 

@@ -11,7 +11,7 @@ body {
   width: 100%; 
 }
 #game-board {
-  position: sticky;
+  position: fixed;
   margin-left: 750px;
   display: grid;
   grid-template-columns: repeat(20, 20px);
