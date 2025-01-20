@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const turnMessage = document.querySelector("#turnMessage");
   const resetBtn = document.querySelector("#resetBtn");
 
-  // Initial board (black pieces end with "black")
+  //board (black pieces end with "black")
   const initialBoard = [
     ["rookblack", "knightblack", "bishopblack", "queenblack", "kingblack", "bishopblack", "knightblack", "rookblack"],
     ["pawnblack", "pawnblack", "pawnblack", "pawnblack", "pawnblack", "pawnblack", "pawnblack", "pawnblack"],
@@ -19,9 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentTurn = "white";
   let gameOver = false;
 
-  // ----------------------------------
+
   //       CREATE CHESSBOARD
-  // ----------------------------------
+
   function createChessBoard() {
     chessboard.innerHTML = "";
     for (let row = 0; row < 8; row++) {
@@ -41,8 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const piece = boardState[row][col];
         if (piece) {
           const img = document.createElement("img");
-          img.src = `img/${piece}.webp`; // e.g. "img/pawnblack.webp"
-          img.alt = piece;              // e.g. "pawnblack" or "king"
+          img.src = `img/${piece}.webp`; //  "img/pawnblack.webp"
+          img.alt = piece;              //  "pawnblack" or "king"
           img.classList.add("piece");
           img.draggable = true;
           square.appendChild(img);
@@ -53,9 +53,9 @@ document.addEventListener("DOMContentLoaded", () => {
     enableDragAndDrop();
   }
 
-  // ----------------------------------
+
   //     DRAG & DROP + HIGHLIGHTS
-  // ----------------------------------
+
   function enableDragAndDrop() {
     const pieces = document.querySelectorAll(".piece");
     let draggedPiece = null;
@@ -146,9 +146,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ----------------------------------
+
   //     VALIDATE MOVE + HIGHLIGHTS
-  // ----------------------------------
+
   function validateMove(piece, r1, c1, r2, c2) {
     if (gameOver) return false;
 
@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 2) Specifically prevent capturing your own king
-    //    (Though normally "same color" check above should block this.)
+
     if (targetPiece && targetPiece.includes("king")) {
       const kingColor = targetPiece.includes("black") ? "black" : "white";
       if (kingColor === color) {
@@ -196,12 +196,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // ----------------------------------
   function isValidMovement(piece, r1, c1, r2, c2) {
     const lower = piece.toLowerCase();
-    if (lower.includes("pawn"))   return validatePawn(piece, r1, c1, r2, c2);
-    if (lower.includes("rook"))   return validateRook(r1, c1, r2, c2);
+    if (lower.includes("pawn")) return validatePawn(piece, r1, c1, r2, c2);
+    if (lower.includes("rook")) return validateRook(r1, c1, r2, c2);
     if (lower.includes("knight")) return validateKnight(r1, c1, r2, c2);
     if (lower.includes("bishop")) return validateBishop(r1, c1, r2, c2);
-    if (lower.includes("queen"))  return validateQueen(r1, c1, r2, c2);
-    if (lower.includes("king"))   return validateKing(r1, c1, r2, c2);
+    if (lower.includes("queen")) return validateQueen(r1, c1, r2, c2);
+    if (lower.includes("king")) return validateKing(r1, c1, r2, c2);
     return false;
   }
 
@@ -290,9 +290,9 @@ document.addEventListener("DOMContentLoaded", () => {
     return false;
   }
 
-  // ----------------------------------
+
   //           RESET BUTTON
-  // ----------------------------------
+
   resetBtn.addEventListener("click", () => {
     boardState = JSON.parse(JSON.stringify(initialBoard));
     currentTurn = "white";
@@ -301,9 +301,9 @@ document.addEventListener("DOMContentLoaded", () => {
     createChessBoard();
   });
 
-  // ----------------------------------
+
   //         START GAME
-  // ----------------------------------
+
   createChessBoard();
   turnMessage.textContent = `Turn: ${currentTurn}`;
 });
