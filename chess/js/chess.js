@@ -191,9 +191,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ----------------------------------
+  
   //     PIECE MOVEMENT FUNCTIONS
-  // ----------------------------------
+  
   function isValidMovement(piece, r1, c1, r2, c2) {
     const lower = piece.toLowerCase();
     if (lower.includes("pawn")) return validatePawn(piece, r1, c1, r2, c2);
