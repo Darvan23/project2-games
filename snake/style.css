@@ -11,6 +11,7 @@ body {
     linear-gradient(rgba(8, 16, 11, 0.78), rgba(8, 16, 11, 0.9)),
     url("snake.jpg") center / cover no-repeat,
     #101711;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .game-shell {
@@ -63,6 +64,8 @@ button {
   font: inherit;
   font-weight: 700;
   cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
 }
 
 .back-link:hover,
@@ -100,6 +103,8 @@ button:hover {
   border: 3px solid rgba(214, 236, 196, 0.34);
   background: linear-gradient(135deg, #1b2b1d, #071107);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.48);
+  touch-action: none;
+  user-select: none;
 }
 
 .cell {
@@ -123,6 +128,39 @@ button:hover {
   box-shadow: 0 0 14px rgba(255, 68, 68, 0.62);
 }
 
+.touch-controls {
+  width: min(76vw, 260px);
+  display: none;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 58px);
+  gap: 10px;
+}
+
+.direction-btn {
+  min-height: 58px;
+  font-size: 1.55rem;
+  line-height: 1;
+}
+
+.direction-btn.up {
+  grid-column: 2;
+}
+
+.direction-btn.left {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.direction-btn.down {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.direction-btn.right {
+  grid-column: 3;
+  grid-row: 2;
+}
+
 @media (max-width: 620px) {
   .game-shell {
     padding: 14px;
@@ -141,5 +179,20 @@ button:hover {
   .back-link,
   #restartBtn {
     grid-row: 2;
+  }
+
+  #game-board {
+    width: min(92vw, 54vh);
+    padding: 7px;
+  }
+
+  .touch-controls {
+    display: grid;
+  }
+}
+
+@media (pointer: coarse) {
+  .touch-controls {
+    display: grid;
   }
 }

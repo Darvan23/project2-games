@@ -11,6 +11,7 @@ body {
     linear-gradient(rgba(10, 24, 18, 0.8), rgba(10, 24, 18, 0.94)),
     radial-gradient(circle at top, #2f7853, transparent 34%),
     #081510;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .game-shell {
@@ -61,6 +62,8 @@ h1 {
   font: inherit;
   font-weight: 700;
   cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
 }
 
 .back-link:hover,
@@ -97,6 +100,8 @@ h1 {
   border-radius: 8px;
   background: linear-gradient(135deg, #0b4f35, #062616);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.48);
+  touch-action: manipulation;
+  user-select: none;
 }
 
 .cell {
@@ -109,6 +114,7 @@ h1 {
   display: grid;
   place-items: center;
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 .cell.valid::after {

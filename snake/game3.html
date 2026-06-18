@@ -12,7 +12,7 @@
       <a href="../index.html" class="back-link">Menu</a>
       <div class="title-block">
         <h1>Snake</h1>
-        <p id="status">Use the arrow keys to move.</p>
+        <p id="status">Use arrows, swipe, or tap the controls.</p>
       </div>
       <button id="restartBtn">Restart</button>
     </div>
@@ -23,6 +23,13 @@
     </div>
 
     <div id="game-board" aria-label="Snake board"></div>
+
+    <div class="touch-controls" aria-label="Snake touch controls">
+      <button class="direction-btn up" type="button" data-direction="up" aria-label="Move up">↑</button>
+      <button class="direction-btn left" type="button" data-direction="left" aria-label="Move left">←</button>
+      <button class="direction-btn down" type="button" data-direction="down" aria-label="Move down">↓</button>
+      <button class="direction-btn right" type="button" data-direction="right" aria-label="Move right">→</button>
+    </div>
   </main>
   <script src="game3.js"></script>
 </body>

@@ -13,6 +13,7 @@ body {
     radial-gradient(circle at 15% 10%, rgba(186, 139, 72, 0.38), transparent 34%),
     radial-gradient(circle at 85% 18%, rgba(57, 107, 91, 0.34), transparent 30%),
     #101010;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .container {
@@ -68,6 +69,7 @@ h1 {
   text-decoration: none;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  touch-action: manipulation;
 }
 
 .game-card:hover {

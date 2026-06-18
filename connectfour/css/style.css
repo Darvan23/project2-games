@@ -11,6 +11,7 @@ body {
     linear-gradient(rgba(12, 20, 28, 0.78), rgba(12, 20, 28, 0.92)),
     radial-gradient(circle at top, #2b6f8f, transparent 34%),
     #10151b;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .game-shell {
@@ -61,6 +62,8 @@ h1 {
   font: inherit;
   font-weight: 700;
   cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
 }
 
 .back-link:hover,
@@ -80,6 +83,8 @@ h1 {
   border-radius: 8px;
   background: linear-gradient(135deg, #225ea8, #103d78);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.48), inset 0 0 0 4px rgba(255, 255, 255, 0.08);
+  touch-action: manipulation;
+  user-select: none;
 }
 
 .slot {
@@ -90,6 +95,7 @@ h1 {
   padding: 8%;
   background: radial-gradient(circle, #071a31 58%, rgba(255, 255, 255, 0.18) 60%, rgba(0, 0, 0, 0.38) 72%);
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 .disc {

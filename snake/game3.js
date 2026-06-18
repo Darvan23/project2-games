@@ -3,6 +3,7 @@ const scoreDisplay = document.getElementById("score");
 const statusDisplay = document.getElementById("status");
 const restartButton = document.getElementById("restartBtn");
 const pauseButton = document.getElementById("pauseBtn");
+const directionButtons = document.querySelectorAll("[data-direction]");
 
 const boardSize = 20;
 const tickSpeed = 130;
@@ -16,6 +17,8 @@ let score;
 let gameTimer;
 let paused;
 let gameOver;
+let touchStartX = 0;
+let touchStartY = 0;
 
 for (let i = 0; i < boardSize * boardSize; i++) {
   const cell = document.createElement("div");
@@ -32,7 +35,7 @@ function startGame() {
   paused = false;
   gameOver = false;
   pauseButton.textContent = "Pause";
-  statusDisplay.textContent = "Use the arrow keys to move.";
+  statusDisplay.textContent = "Use arrows, swipe, or tap the controls.";
   placeFood();
   updateScore();
   draw();
@@ -117,16 +120,52 @@ function togglePause() {
   if (gameOver) return;
   paused = !paused;
   pauseButton.textContent = paused ? "Resume" : "Pause";
-  statusDisplay.textContent = paused ? "Paused." : "Use the arrow keys to move.";
+  statusDisplay.textContent = paused ? "Paused." : "Use arrows, swipe, or tap the controls.";
 }
 
 window.addEventListener("keydown", (event) => {
+  if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].includes(event.key)) {
+    event.preventDefault();
+  }
   if (event.key === "ArrowUp") setDirection(0, -1);
   if (event.key === "ArrowDown") setDirection(0, 1);
   if (event.key === "ArrowLeft") setDirection(-1, 0);
   if (event.key === "ArrowRight") setDirection(1, 0);
   if (event.key === " ") togglePause();
 });
+
+directionButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const directionName = button.dataset.direction;
+    if (directionName === "up") setDirection(0, -1);
+    if (directionName === "down") setDirection(0, 1);
+    if (directionName === "left") setDirection(-1, 0);
+    if (directionName === "right") setDirection(1, 0);
+  });
+});
+
+gameBoard.addEventListener("touchstart", (event) => {
+  const touch = event.changedTouches[0];
+  touchStartX = touch.clientX;
+  touchStartY = touch.clientY;
+}, { passive: true });
+
+gameBoard.addEventListener("touchmove", (event) => {
+  event.preventDefault();
+}, { passive: false });
+
+gameBoard.addEventListener("touchend", (event) => {
+  const touch = event.changedTouches[0];
+  const deltaX = touch.clientX - touchStartX;
+  const deltaY = touch.clientY - touchStartY;
+
+  if (Math.max(Math.abs(deltaX), Math.abs(deltaY)) < 24) return;
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    setDirection(deltaX > 0 ? 1 : -1, 0);
+  } else {
+    setDirection(0, deltaY > 0 ? 1 : -1);
+  }
+}, { passive: true });
 
 restartButton.addEventListener("click", startGame);
 pauseButton.addEventListener("click", togglePause);
