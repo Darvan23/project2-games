@@ -3,13 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Snake Game</title>
+  <title>Snake</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Snake Game</h1>
-  <div id="score">Score: 0</div>
-  <div id="game-board"></div>
+  <main class="game-shell">
+    <div class="topbar">
+      <a href="../index.html" class="back-link">Menu</a>
+      <div class="title-block">
+        <h1>Snake</h1>
+        <p id="status">Use the arrow keys to move.</p>
+      </div>
+      <button id="restartBtn">Restart</button>
+    </div>
+
+    <div class="score-row">
+      <div id="score">Score: 0</div>
+      <button id="pauseBtn">Pause</button>
+    </div>
+
+    <div id="game-board" aria-label="Snake board"></div>
+  </main>
   <script src="game3.js"></script>
 </body>
 </html>

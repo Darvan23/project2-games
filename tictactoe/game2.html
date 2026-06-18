@@ -1,40 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tic Tac Toe</title>
-  <link rel="stylesheet" href="/tictactoe/css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-  <div id="game-container">
-    <h1>Tic Tac Toe</h1>
-    <div id="scoreboard"></div>
+  <main id="game-container">
+    <div class="topbar">
+      <a href="../index.html" class="back-link">Menu</a>
+      <div class="title-block">
+        <h1>Tic Tac Toe</h1>
+        <p id="winner-message">O starts.</p>
+      </div>
+      <button id="restart-button">Reset</button>
+    </div>
+
+    <div id="scoreboard">
+      <span id="score-o">O: 0</span>
+      <span id="score-draw">Draws: 0</span>
+      <span id="score-x">X: 0</span>
+    </div>
 
     <div id="player-turn">
       <div class="player active" id="player-o">O</div>
       <div class="player inactive" id="player-x">X</div>
     </div>
 
-    <div id="game-board">
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
+    <div id="game-board" aria-label="Tic Tac Toe board">
+      <button class="cell" data-cell type="button"></button>
+      <button class="cell" data-cell type="button"></button>
+      <button class="cell" data-cell type="button"></button>
+      <button class="cell" data-cell type="button"></button>
+      <button class="cell" data-cell type="button"></button>
+      <button class="cell" data-cell type="button"></button>
+      <button class="cell" data-cell type="button"></button>
+      <button class="cell" data-cell type="button"></button>
+      <button class="cell" data-cell type="button"></button>
     </div>
+  </main>
 
-    <p id="winner-message"></p>
-    <button id="restart-button">Restart Game</button>
-  </div>
-  </div>
+  <script src="script.js"></script>
 </body>
-<script src="script.js"></script>
-
 </html>

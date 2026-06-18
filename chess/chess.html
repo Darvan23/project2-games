@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Chess Game</title>
-  <link rel="stylesheet" href="css/chess.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chess</title>
+  <link rel="stylesheet" href="css/chess.css">
 </head>
 <body>
-  <h1 style="text-align: center;">Chess Game</h1>
-  <button id="resetBtn">Reset Game</button>
-  <div id="chessboard" class="chessboard"></div>
-  <p id="turnMessage" style="text-align: center;"></p>
- 
+  <main class="game-shell">
+    <div class="topbar">
+      <a href="../index.html" class="back-link">Menu</a>
+      <div class="title-block">
+        <h1>Chess</h1>
+        <p id="turnMessage"></p>
+      </div>
+      <button id="resetBtn">Reset</button>
+    </div>
 
-
+    <div class="board-wrap">
+      <div id="chessboard" class="chessboard" aria-label="Chess board"></div>
+    </div>
+  </main>
 
   <script src="js/chess.js"></script>
 </body>

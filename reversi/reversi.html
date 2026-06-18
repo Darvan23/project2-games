@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reversi</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="game-shell">
+    <div class="topbar">
+      <a href="../index.html" class="back-link">Menu</a>
+      <div class="title-block">
+        <h1>Reversi</h1>
+        <p id="status">Black starts.</p>
+      </div>
+      <button id="resetBtn">Reset</button>
+    </div>
+
+    <div class="score-row">
+      <span id="blackScore">Black: 2</span>
+      <span id="whiteScore">White: 2</span>
+    </div>
+
+    <div id="board" aria-label="Reversi board"></div>
+  </main>
+
+  <script src="js/reversi.js"></script>
+</body>
+</html>

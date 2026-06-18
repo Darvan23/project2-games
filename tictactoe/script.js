@@ -1,14 +1,16 @@
-const cells = document.querySelectorAll("[data-cell]");
+const cells = [...document.querySelectorAll("[data-cell]")];
 const winnerMessage = document.querySelector("#winner-message");
 const restartButton = document.querySelector("#restart-button");
 const playerOIndicator = document.querySelector("#player-o");
 const playerXIndicator = document.querySelector("#player-x");
+const scoreO = document.querySelector("#score-o");
+const scoreX = document.querySelector("#score-x");
+const scoreDraw = document.querySelector("#score-draw");
 
-//this code showes that player O will always start first at the start of a round.
 let currentPlayer = "O";
 let gameActive = true;
+let scores = { O: 0, X: 0, draws: 0 };
 
-//winning conbinations to show which combinations wins diagonal, horizontal and vertical.
 const winningCombinations = [
   [0, 1, 2],
   [3, 4, 5],
@@ -17,81 +19,74 @@ const winningCombinations = [
   [1, 4, 7],
   [2, 5, 8],
   [0, 4, 8],
-  [2, 4, 6],
+  [2, 4, 6]
 ];
-//this code checks to see if the game is still active if not it means a player has won or ended in a draw.
-function handleCellClick(e) {
-  if (!gameActive) return;
 
-  // this code means that the cell points to the specific div class element the user clicked from the 9 squares.
-  const cell = e.target;
+function handleCellClick(event) {
+  const cell = event.currentTarget;
+  if (!gameActive || cell.classList.contains("taken")) return;
 
-  //this if-statement shows that you cannot click twice on a clicked square meaning its taken, when none of the winning conbinations are met it ends in a draw 
-  //and if one of the conbinations is met it results in a  player winning
-  if (!cell.classList.contains("taken")) {
-    cell.textContent = currentPlayer;
-    cell.classList.add("taken");
+  cell.textContent = currentPlayer;
+  cell.classList.add("taken", currentPlayer.toLowerCase());
 
-    if (checkWin()) {
-      winnerMessage.textContent = `${currentPlayer} Wins!`;
-      gameActive = false;
-      return;
-    }
-
-    if (isDraw()) {
-      winnerMessage.textContent = "It's a Draw!";
-      gameActive = false;
-      return;
-    }
-
-    togglePlayer();
+  const win = winningLine();
+  if (win) {
+    win.forEach((index) => cells[index].classList.add("winner"));
+    scores[currentPlayer]++;
+    updateScores();
+    winnerMessage.textContent = `${currentPlayer} wins.`;
+    gameActive = false;
+    return;
   }
+
+  if (isDraw()) {
+    scores.draws++;
+    updateScores();
+    winnerMessage.textContent = "Draw.";
+    gameActive = false;
+    return;
+  }
+
+  togglePlayer();
 }
 
 function togglePlayer() {
   currentPlayer = currentPlayer === "O" ? "X" : "O";
-
-  if (currentPlayer === "O") {
-    playerOIndicator.classList.add("active");
-    playerOIndicator.classList.remove("inactive");
-    playerXIndicator.classList.add("inactive");
-    playerXIndicator.classList.remove("active");
-  } else {
-    playerXIndicator.classList.add("active");
-    playerXIndicator.classList.remove("inactive");
-    playerOIndicator.classList.add("inactive");
-    playerOIndicator.classList.remove("active");
-  }
+  winnerMessage.textContent = `${currentPlayer} to move.`;
+  playerOIndicator.classList.toggle("active", currentPlayer === "O");
+  playerOIndicator.classList.toggle("inactive", currentPlayer !== "O");
+  playerXIndicator.classList.toggle("active", currentPlayer === "X");
+  playerXIndicator.classList.toggle("inactive", currentPlayer !== "X");
 }
 
-function checkWin() {
-  return winningCombinations.some(combination => {
-    return combination.every(index => {
-      return cells[index].textContent === currentPlayer;
-    });
+function winningLine() {
+  return winningCombinations.find((combination) => {
+    return combination.every((index) => cells[index].textContent === currentPlayer);
   });
 }
 
 function isDraw() {
-  return [...cells].every(cell => cell.classList.contains("taken"));
+  return cells.every((cell) => cell.classList.contains("taken"));
 }
 
 function restartGame() {
   currentPlayer = "O";
   gameActive = true;
-  winnerMessage.textContent = "";
-  cells.forEach(cell => {
+  winnerMessage.textContent = "O starts.";
+  cells.forEach((cell) => {
     cell.textContent = "";
-    cell.classList.remove("taken");
+    cell.className = "cell";
   });
-  playerOIndicator.classList.add("active");
-  playerXIndicator.classList.remove("active");
-  playerOIndicator.classList.remove("inactive");
-  playerXIndicator.classList.add("inactive");
+  playerOIndicator.className = "player active";
+  playerXIndicator.className = "player inactive";
 }
 
-cells.forEach(cell => {
-  cell.addEventListener("click", handleCellClick);
-});
+function updateScores() {
+  scoreO.textContent = `O: ${scores.O}`;
+  scoreX.textContent = `X: ${scores.X}`;
+  scoreDraw.textContent = `Draws: ${scores.draws}`;
+}
 
+cells.forEach((cell) => cell.addEventListener("click", handleCellClick));
 restartButton.addEventListener("click", restartGame);
+updateScores();

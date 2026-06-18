@@ -1,115 +1,133 @@
-// data 
 const gameBoard = document.getElementById("game-board");
 const scoreDisplay = document.getElementById("score");
+const statusDisplay = document.getElementById("status");
+const restartButton = document.getElementById("restartBtn");
+const pauseButton = document.getElementById("pauseBtn");
+
 const boardSize = 20;
+const tickSpeed = 130;
+const cells = [];
 
-let snake = [{ x: 10, y: 10 }]; // Snake's body parts
-let foodX = 5;
-let foodY = 5;
-let dirX = 0;
-let dirY = 1;
-let score = 0;
+let snake;
+let food;
+let direction;
+let nextDirection;
+let score;
+let gameTimer;
+let paused;
+let gameOver;
 
-// Initialize the grid and new cell with appendchild 
 for (let i = 0; i < boardSize * boardSize; i++) {
-    const cell = document.createElement("div");
-    cell.classList.add("cell");
-    gameBoard.appendChild(cell);
+  const cell = document.createElement("div");
+  cell.className = "cell";
+  gameBoard.appendChild(cell);
+  cells.push(cell);
+}
+
+function startGame() {
+  snake = [{ x: 10, y: 10 }, { x: 10, y: 11 }, { x: 10, y: 12 }];
+  direction = { x: 0, y: -1 };
+  nextDirection = { ...direction };
+  score = 0;
+  paused = false;
+  gameOver = false;
+  pauseButton.textContent = "Pause";
+  statusDisplay.textContent = "Use the arrow keys to move.";
+  placeFood();
+  updateScore();
+  draw();
+  clearInterval(gameTimer);
+  gameTimer = setInterval(gameLoop, tickSpeed);
+}
+
+function gameLoop() {
+  if (paused || gameOver) return;
+  direction = nextDirection;
+
+  const head = {
+    x: snake[0].x + direction.x,
+    y: snake[0].y + direction.y
+  };
+
+  if (hitWall(head) || hitSelf(head)) {
+    endGame();
+    return;
+  }
+
+  snake.unshift(head);
+
+  if (head.x === food.x && head.y === food.y) {
+    score++;
+    updateScore();
+    placeFood();
+  } else {
+    snake.pop();
+  }
+
+  draw();
 }
 
 function draw() {
-    // Clear the grid
-    const cells = document.querySelectorAll(".cell");
-    cells.forEach(cell => cell.classList.remove("snake", "food"));
+  cells.forEach((cell) => {
+    cell.className = "cell";
+  });
 
-    // Draw the snake
-    snake.forEach(segment => {
-        const index = segment.y * boardSize + segment.x;
-        // Calculates the cell index for the food based on its x and y
-        if (cells[index]) cells[index].classList.add("snake");
-    });
+  snake.forEach((segment, index) => {
+    const cell = cells[segment.y * boardSize + segment.x];
+    if (cell) cell.classList.add(index === 0 ? "snake-head" : "snake");
+  });
 
-    // Draw the food
-    const foodIndex = foodY * boardSize + foodX;
-    if (cells[foodIndex]) cells[foodIndex].classList.add("food");
+  cells[food.y * boardSize + food.x].classList.add("food");
 }
 
-// snake growth when eats 
-function update() {
-    const head = { x: snake[0].x + dirX, y: snake[0].y + dirY };
-
-    // Check for snake to not enter wall, die
-    if (
-        head.x < 0 || head.x >= boardSize || 
-        head.y < 0 || head.y >= boardSize || 
-        snake.some(segment => segment.x === head.x && segment.y === head.y)
-    ) {
-        alert(`Game Over! Your final score: ${score}`);
-        resetGame();
-        return;
-    }
-
-    // Add new head to the snake
-    snake.unshift(head);
-
-    // Check if the snake eats food
-    if (head.x === foodX && head.y === foodY) {
-        score ++;
-        updateScore();
-        placeFood();
-    } else {
-        // Remove the tail if no food eaten
-        snake.pop();
-    }
-}
-// random food placement 
 function placeFood() {
-    let validPosition = false;
-    while (!validPosition) {
-        foodX = Math.floor(Math.random() * boardSize);
-        foodY = Math.floor(Math.random() * boardSize);
-
-        // Ensure food doesn't spawn inside the snake .
-        validPosition = !snake.some(segment => segment.x === foodX && segment.y === foodY);
-    }
+  do {
+    food = {
+      x: Math.floor(Math.random() * boardSize),
+      y: Math.floor(Math.random() * boardSize)
+    };
+  } while (snake.some((segment) => segment.x === food.x && segment.y === food.y));
 }
-// reset game 
-function resetGame() {
-    snake = [{ x: 10, y: 10 }];
-    dirX = 0;
-    dirY = 1;
-    score = 0;
-    updateScore();
-    placeFood();
+
+function hitWall(point) {
+  return point.x < 0 || point.x >= boardSize || point.y < 0 || point.y >= boardSize;
+}
+
+function hitSelf(point) {
+  return snake.some((segment) => segment.x === point.x && segment.y === point.y);
+}
+
+function setDirection(x, y) {
+  if (direction.x + x === 0 && direction.y + y === 0) return;
+  nextDirection = { x, y };
 }
 
 function updateScore() {
-    scoreDisplay.textContent = `Score: ${score}`;
+  scoreDisplay.textContent = `Score: ${score}`;
 }
-//movement arrows
-window.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowUp" && dirY !== 1) {
-        dirX = 0; 
-        dirY = -1;
-    } else if (e.key === "ArrowDown" && dirY !== -1) {
-        dirX = 0; 
-        dirY = 1;
-    } else if (e.key === "ArrowLeft" && dirX !== 1) {
-        dirX = -1; 
-        dirY = 0;
-    } else if (e.key === "ArrowRight" && dirX !== -1) {
-        dirX = 1; 
-        dirY = 0; 
-    }
+
+function endGame() {
+  gameOver = true;
+  clearInterval(gameTimer);
+  statusDisplay.textContent = `Game over. Final score: ${score}.`;
+  pauseButton.textContent = "Pause";
+}
+
+function togglePause() {
+  if (gameOver) return;
+  paused = !paused;
+  pauseButton.textContent = paused ? "Resume" : "Pause";
+  statusDisplay.textContent = paused ? "Paused." : "Use the arrow keys to move.";
+}
+
+window.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowUp") setDirection(0, -1);
+  if (event.key === "ArrowDown") setDirection(0, 1);
+  if (event.key === "ArrowLeft") setDirection(-1, 0);
+  if (event.key === "ArrowRight") setDirection(1, 0);
+  if (event.key === " ") togglePause();
 });
 
-function gameLoop() {
-    update();
-    draw();
-    setTimeout(gameLoop, 200);
-}
-
-// Start the game
-placeFood();
-draw();
-gameLoop();
+restartButton.addEventListener("click", startGame);
+pauseButton.addEventListener("click", togglePause);
+startGame();

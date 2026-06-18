@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Battleship</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="game-shell">
+    <div class="topbar">
+      <a href="../index.html" class="back-link">Menu</a>
+      <div class="title-block">
+        <h1>Battleship</h1>
+        <p id="status">Find and sink the hidden fleet.</p>
+      </div>
+      <button id="resetBtn">Reset</button>
+    </div>
+
+    <div class="hud">
+      <span id="shots">Shots: 0</span>
+      <span id="remaining">Ships: 5</span>
+    </div>
+
+    <div id="board" aria-label="Battleship target grid"></div>
+  </main>
+
+  <script src="js/battleship.js"></script>
+</body>
+</html>

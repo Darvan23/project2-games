@@ -1,54 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Menu</title>
-    <link rel="stylesheet" href="css/style.css">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Room</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Explore Our Games</h1>
-        </header>
-        
-        <main>
-            <div class="game-list">
-                <div class="game-card">
-                    <a href="chess/chess.html" class="game-link image-button">
-                        <img src="img/chess.png" alt="Chess game icon" class="chess-icon">
-                        <h2>Chess</h2>
-                        <p>Challenge your mind with this classic strategy game.</p>
-                    </a>
-                </div>
-                <div class="game-card">
-                    <a href="tictactoe/game2.html" class="game-link">
-                        <img src="img/tactactoe.png" alt="Chess game icon" class="tictactoe">
-                        <h2>Tic Tac Toe</h2>
-                        <p>Join the fun in this exciting new game.</p>
-                    </a>
-                </div>
-                <div class="game-card">
-                    <a href="snake/game3.html" class="game-link">
-                        <img src="img/snake.webp" alt="Chess game icon" class="snake">
-                        <h2>Snake</h2>
-                        <p>Test your skills in this Snake game.</p>
-                    </a>
-                </div>
-                <div class="game-card">
-                    <a href="dammen/dammen.html" class="game-link">
-                        <img src="img/dammen.png" alt="Chess game icon" class="snake">
-                        <h2>Checkers</h2>
-                        <p>test your skills with Checkers</p>
-                    </a></div>
-            </div>
-        </main>
-        
-        <footer>
-            <p>&copy; 2025 Game Project | All Rights Reserved</p>
-        </footer>
-    </div>
+  <main class="container">
+    <header class="menu-header">
+      <p class="eyebrow">Project 2 Games</p>
+      <h1>Game Room</h1>
+      <p class="intro">Choose a board classic or jump into a quick arcade round.</p>
+    </header>
+
+    <section class="game-list" aria-label="Available games">
+      <a href="chess/chess.html" class="game-card">
+        <img src="img/chess.png" alt="Chess pieces on a board">
+        <span class="game-meta">Full legal move rules</span>
+        <h2>Chess</h2>
+        <p>Play with check, checkmate, castling, en passant, and promotion.</p>
+      </a>
+
+      <a href="dammen/dammen.html" class="game-card">
+        <img src="img/dammen.png" alt="Checkers board and pieces">
+        <span class="game-meta">Forced captures</span>
+        <h2>Checkers</h2>
+        <p>Move, jump, crown kings, and chain captures across the board.</p>
+      </a>
+
+      <a href="snake/game3.html" class="game-card">
+        <img src="img/snake.webp" alt="Snake game artwork">
+        <span class="game-meta">Arcade</span>
+        <h2>Snake</h2>
+        <p>Grow the snake, chase food, pause, restart, and beat your score.</p>
+      </a>
+
+      <a href="tictactoe/game2.html" class="game-card">
+        <img src="img/tactactoe.png" alt="Tic tac toe grid">
+        <span class="game-meta">Quick match</span>
+        <h2>Tic Tac Toe</h2>
+        <p>Take turns, track wins, and reset the board for the next round.</p>
+      </a>
+
+      <a href="connectfour/connectfour.html" class="game-card">
+        <div class="game-art connect-four-art" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <span class="game-meta">Four in a row</span>
+        <h2>Connect Four</h2>
+        <p>Drop discs into the board and connect four before your opponent.</p>
+      </a>
+
+      <a href="battleship/battleship.html" class="game-card">
+        <div class="game-art battleship-art" aria-hidden="true">
+          <span class="ship ship-one"></span>
+          <span class="ship ship-two"></span>
+          <span class="hit-dot"></span>
+          <span class="miss-ring"></span>
+        </div>
+        <span class="game-meta">Hidden fleet</span>
+        <h2>Battleship</h2>
+        <p>Search the ocean grid, land hits, and sink every hidden ship.</p>
+      </a>
+
+      <a href="reversi/reversi.html" class="game-card">
+        <div class="game-art reversi-art" aria-hidden="true">
+          <span class="black"></span><span class="white"></span><span class="white"></span><span class="black"></span>
+        </div>
+        <span class="game-meta">Flip the board</span>
+        <h2>Reversi</h2>
+        <p>Place discs, capture lines, and control the most squares.</p>
+      </a>
+
+      <a href="memory/memory.html" class="game-card">
+        <div class="game-art memory-art" aria-hidden="true">
+          <span>♜</span><span></span><span>★</span><span></span>
+          <span></span><span>◆</span><span></span><span>♞</span>
+        </div>
+        <span class="game-meta">Memory puzzle</span>
+        <h2>Memory Match</h2>
+        <p>Flip cards, remember positions, and match every pair.</p>
+      </a>
+    </section>
+  </main>
 </body>
 </html>
