@@ -81,6 +81,30 @@ h1 {
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.46), inset 0 0 0 2px rgba(255, 255, 255, 0.08);
 }
 
+.ai-toggle {
+  width: fit-content;
+  margin: 0 auto;
+  min-height: 42px;
+  padding: 9px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #f7f1e6;
+  background: rgba(31, 29, 26, 0.76);
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.ai-toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: #d6a85f;
+}
+
 .chessboard {
   width: min(86vw, 78vh, 680px);
   aspect-ratio: 1;

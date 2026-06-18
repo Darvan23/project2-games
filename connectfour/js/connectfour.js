@@ -1,12 +1,15 @@
 const boardElement = document.getElementById("board");
 const statusElement = document.getElementById("status");
 const resetButton = document.getElementById("resetBtn");
+const aiToggle = document.getElementById("aiToggle");
 
 const rows = 6;
 const cols = 7;
 let board;
 let currentPlayer;
 let gameOver;
+let aiEnabled = false;
+let aiThinking = false;
 
 function setupGame() {
   board = Array.from({ length: rows }, () => Array(cols).fill(null));
@@ -37,10 +40,15 @@ function render() {
 }
 
 function dropDisc(col) {
-  if (gameOver) return;
+  if (gameOver || isAiTurn() || aiThinking) return;
+  playColumn(col);
+}
+
+function playColumn(col) {
+  if (gameOver) return false;
 
   const row = lowestOpenRow(col);
-  if (row === -1) return;
+  if (row === -1) return false;
 
   board[row][col] = currentPlayer;
   const win = winningCells(row, col);
@@ -49,19 +57,21 @@ function dropDisc(col) {
     statusElement.textContent = `${capitalize(currentPlayer)} wins.`;
     render();
     markWinningCells(win);
-    return;
+    return true;
   }
 
   if (board.flat().every(Boolean)) {
     gameOver = true;
     statusElement.textContent = "Draw.";
     render();
-    return;
+    return true;
   }
 
   currentPlayer = currentPlayer === "red" ? "yellow" : "red";
-  statusElement.textContent = `${capitalize(currentPlayer)} to move.`;
+  statusElement.textContent = `${capitalize(currentPlayer)}${isAiTurn() ? " AI" : ""} to move.`;
   render();
+  queueAiMove();
+  return true;
 }
 
 function lowestOpenRow(col) {
@@ -119,9 +129,55 @@ function markWinningCells(cells) {
   });
 }
 
+function isAiTurn() {
+  return aiEnabled && currentPlayer === "yellow" && !gameOver;
+}
+
+function queueAiMove() {
+  if (!isAiTurn() || aiThinking) return;
+  aiThinking = true;
+  setTimeout(() => {
+    const column = chooseAiColumn();
+    aiThinking = false;
+    if (column !== null && isAiTurn()) playColumn(column);
+  }, 360);
+}
+
+function chooseAiColumn() {
+  const openColumns = availableColumns();
+  if (openColumns.length === 0) return null;
+
+  const winningColumn = openColumns.find((col) => wouldWin(col, "yellow"));
+  if (winningColumn !== undefined) return winningColumn;
+
+  const blockingColumn = openColumns.find((col) => wouldWin(col, "red"));
+  if (blockingColumn !== undefined) return blockingColumn;
+
+  const preference = [3, 2, 4, 1, 5, 0, 6];
+  const usefulColumns = preference.filter((col) => openColumns.includes(col));
+  return usefulColumns[Math.floor(Math.random() * Math.min(3, usefulColumns.length))];
+}
+
+function availableColumns() {
+  return Array.from({ length: cols }, (_, col) => col).filter((col) => lowestOpenRow(col) !== -1);
+}
+
+function wouldWin(col, player) {
+  const row = lowestOpenRow(col);
+  if (row === -1) return false;
+  board[row][col] = player;
+  const win = Boolean(winningCells(row, col));
+  board[row][col] = null;
+  return win;
+}
+
 function capitalize(value) {
   return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
 resetButton.addEventListener("click", setupGame);
+aiToggle.addEventListener("change", () => {
+  aiEnabled = aiToggle.checked;
+  setupGame();
+});
 setupGame();

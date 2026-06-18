@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const chessboard = document.querySelector("#chessboard");
   const turnMessage = document.querySelector("#turnMessage");
   const resetBtn = document.querySelector("#resetBtn");
+  const aiToggle = document.querySelector("#aiToggle");
 
   const assets = {
     wp: "pawn.webp",
@@ -37,6 +38,17 @@ document.addEventListener("DOMContentLoaded", () => {
   let fullmoveNumber;
   let positionCounts;
   let gameOver;
+  let aiEnabled = false;
+  let aiThinking = false;
+
+  const pieceValues = {
+    p: 100,
+    n: 320,
+    b: 330,
+    r: 500,
+    q: 900,
+    k: 0
+  };
 
   function newPiece(color, type) {
     return { color, type };
@@ -95,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
           img.src = `img/${assets[piece.color + piece.type]}`;
           img.alt = `${piece.color === "w" ? "white" : "black"} ${names[piece.type]}`;
           img.className = "piece";
-          img.draggable = piece.color === turn && !gameOver;
+          img.draggable = piece.color === turn && !gameOver && !isAiTurn();
           img.addEventListener("dragstart", handleDragStart);
           square.appendChild(img);
         }
@@ -116,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const col = Number(square.dataset.col);
     const piece = board[row][col];
 
-    if (gameOver) return;
+    if (gameOver || isAiTurn() || aiThinking) return;
 
     if (selected) {
       const move = legalMoves.find((candidate) => candidate.to.row === row && candidate.to.col === col);
@@ -141,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const row = Number(square.dataset.row);
     const col = Number(square.dataset.col);
     const piece = board[row][col];
-    if (!piece || piece.color !== turn || gameOver) {
+    if (!piece || piece.color !== turn || gameOver || isAiTurn() || aiThinking) {
       event.preventDefault();
       return;
     }
@@ -170,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
       selected = null;
       legalMoves = [];
       render();
-      return;
+      return false;
     }
 
     turn = opposite(turn);
@@ -185,6 +197,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     render();
+    queueAiMove();
+    return true;
   }
 
   function applyMove(move) {
@@ -257,10 +271,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function getLegalMovesForSquare(row, col) {
+    const piece = board[row][col];
+    if (!piece) return [];
     return getPseudoMoves(row, col).filter((move) => {
       const snapshot = cloneState();
       applyMove(move);
-      const legal = !isKingInCheck(snapshot.turn);
+      const legal = !isKingInCheck(piece.color);
       restoreState(snapshot);
       return legal;
     });
@@ -514,8 +530,64 @@ document.addEventListener("DOMContentLoaded", () => {
       gameOver = true;
       turnMessage.textContent = "Draw by insufficient material.";
     } else {
-      turnMessage.textContent = `${colorName} to move${inCheck ? " - check" : ""}`;
+      const aiText = aiEnabled && turn === "b" ? " AI" : "";
+      turnMessage.textContent = `${colorName}${aiText} to move${inCheck ? " - check" : ""}`;
     }
+  }
+
+  function isAiTurn() {
+    return aiEnabled && turn === "b" && !gameOver;
+  }
+
+  function queueAiMove() {
+    if (!isAiTurn() || aiThinking) return;
+    aiThinking = true;
+    setTimeout(() => {
+      const move = chooseAiMove();
+      aiThinking = false;
+      if (move && isAiTurn()) makeMove(move);
+    }, 450);
+  }
+
+  function chooseAiMove() {
+    const moves = getAllLegalMoves("b");
+    if (moves.length === 0) return null;
+    const scored = moves.map((move) => ({
+      move,
+      score: scoreAiMove(move, "b")
+    }));
+    scored.sort((a, b) => b.score - a.score);
+
+    const topGroup = scored.slice(0, Math.min(4, scored.length));
+    return topGroup[Math.floor(Math.random() * topGroup.length)].move;
+  }
+
+  function scoreAiMove(move, color) {
+    const movingPiece = board[move.from.row][move.from.col];
+    const target = board[move.to.row][move.to.col];
+    let score = Math.random() * 60;
+
+    if (target) score += pieceValues[target.type] - pieceValues[movingPiece.type] * 0.12;
+    if (move.enPassant) score += pieceValues.p;
+    if (move.promotion) score += pieceValues.q - pieceValues.p;
+    if (move.castle) score += 70;
+
+    const centerDistance = Math.abs(3.5 - move.to.row) + Math.abs(3.5 - move.to.col);
+    score += (7 - centerDistance) * 8;
+
+    const snapshot = cloneState();
+    applyMove(move);
+    const opponentColor = opposite(color);
+    const givesCheck = isKingInCheck(opponentColor);
+    const opponentMoves = getAllLegalMoves(opponentColor);
+    if (givesCheck) score += 90;
+    if (givesCheck && opponentMoves.length === 0) score += 10000;
+    if (isSquareAttacked(move.to.row, move.to.col, opponentColor)) {
+      score -= pieceValues[movingPiece.type] * 0.45;
+    }
+    restoreState(snapshot);
+
+    return score;
   }
 
   function boardKey() {
@@ -557,5 +629,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   resetBtn.addEventListener("click", setupBoard);
+  aiToggle.addEventListener("change", () => {
+    aiEnabled = aiToggle.checked;
+    setupBoard();
+  });
   setupBoard();
 });

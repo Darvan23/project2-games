@@ -6,10 +6,13 @@ const playerXIndicator = document.querySelector("#player-x");
 const scoreO = document.querySelector("#score-o");
 const scoreX = document.querySelector("#score-x");
 const scoreDraw = document.querySelector("#score-draw");
+const aiToggle = document.querySelector("#aiToggle");
 
 let currentPlayer = "O";
 let gameActive = true;
 let scores = { O: 0, X: 0, draws: 0 };
+let aiEnabled = false;
+let aiThinking = false;
 
 const winningCombinations = [
   [0, 1, 2],
@@ -24,8 +27,11 @@ const winningCombinations = [
 
 function handleCellClick(event) {
   const cell = event.currentTarget;
-  if (!gameActive || cell.classList.contains("taken")) return;
+  if (!gameActive || cell.classList.contains("taken") || isAiTurn() || aiThinking) return;
+  playCell(cell);
+}
 
+function playCell(cell) {
   cell.textContent = currentPlayer;
   cell.classList.add("taken", currentPlayer.toLowerCase());
 
@@ -36,7 +42,7 @@ function handleCellClick(event) {
     updateScores();
     winnerMessage.textContent = `${currentPlayer} wins.`;
     gameActive = false;
-    return;
+    return true;
   }
 
   if (isDraw()) {
@@ -44,10 +50,12 @@ function handleCellClick(event) {
     updateScores();
     winnerMessage.textContent = "Draw.";
     gameActive = false;
-    return;
+    return true;
   }
 
   togglePlayer();
+  queueAiMove();
+  return true;
 }
 
 function togglePlayer() {
@@ -72,6 +80,7 @@ function isDraw() {
 function restartGame() {
   currentPlayer = "O";
   gameActive = true;
+  aiThinking = false;
   winnerMessage.textContent = "O starts.";
   cells.forEach((cell) => {
     cell.textContent = "";
@@ -79,6 +88,49 @@ function restartGame() {
   });
   playerOIndicator.className = "player active";
   playerXIndicator.className = "player inactive";
+}
+
+function isAiTurn() {
+  return aiEnabled && currentPlayer === "X" && gameActive;
+}
+
+function queueAiMove() {
+  if (!isAiTurn() || aiThinking) return;
+  aiThinking = true;
+  setTimeout(() => {
+    const index = chooseAiCell();
+    aiThinking = false;
+    if (index !== null && isAiTurn()) playCell(cells[index]);
+  }, 320);
+}
+
+function chooseAiCell() {
+  const open = cells
+    .map((cell, index) => cell.classList.contains("taken") ? null : index)
+    .filter((index) => index !== null);
+
+  return findWinningMove("X", open)
+    ?? findWinningMove("O", open)
+    ?? (open.includes(4) ? 4 : null)
+    ?? randomAvailable([0, 2, 6, 8], open)
+    ?? randomAvailable(open, open);
+}
+
+function findWinningMove(player, open) {
+  return open.find((index) => {
+    cells[index].textContent = player;
+    const wins = winningCombinations.some((combination) => {
+      return combination.every((cellIndex) => cells[cellIndex].textContent === player);
+    });
+    cells[index].textContent = "";
+    return wins;
+  });
+}
+
+function randomAvailable(candidates, open) {
+  const available = candidates.filter((index) => open.includes(index));
+  if (available.length === 0) return null;
+  return available[Math.floor(Math.random() * available.length)];
 }
 
 function updateScores() {
@@ -89,4 +141,8 @@ function updateScores() {
 
 cells.forEach((cell) => cell.addEventListener("click", handleCellClick));
 restartButton.addEventListener("click", restartGame);
+aiToggle.addEventListener("change", () => {
+  aiEnabled = aiToggle.checked;
+  restartGame();
+});
 updateScores();
