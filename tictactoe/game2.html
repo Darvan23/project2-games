@@ -5,6 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tic Tac Toe</title>
   <link rel="stylesheet" href="css/style.css">
+
+    <!-- Anonymous analytics (Umami): no cookies, no personal data -->
+    <script>try{var q=new URLSearchParams(location.search).get("notrack");if(q==="1")localStorage.setItem("umami.disabled","1");if(q==="0")localStorage.removeItem("umami.disabled");}catch(e){}</script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="db2eae29-f59c-4067-9ddf-e38b663fb989" data-domains="darvan23.github.io"></script>
+    <script>
+    (function () {
+        var game = 'Boter, kaas en eieren';
+        var t0 = Date.now(), sent = false;
+        function track(n, d) { try { if (window.umami) window.umami.track(n, d); } catch (e) {} }
+        window.addEventListener("load", function () { setTimeout(function () { track("Game geopend", { game: game }); }, 1200); });
+        function leave() {
+            if (sent) return; sent = true;
+            var s = Math.round((Date.now() - t0) / 1000);
+            if (s >= 3) track("Speeltijd", { game: game, seconden: s, minuten: Math.round(s / 60) });
+        }
+        document.addEventListener("visibilitychange", function () { if (document.visibilityState === "hidden") leave(); });
+        window.addEventListener("pagehide", leave);
+    })();
+    </script>
 </head>
 <body>
   <main id="game-container">
